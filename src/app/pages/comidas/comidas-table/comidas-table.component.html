@@ -1,0 +1,37 @@
+<!-- src/app/pages/comidas/comidas-table/comidas-table.component.html -->
+
+<h2>Lista de Comidas</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Precio</th>
+      <th>Descripción</th>
+      <th>Imagen</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let comida of comidas">
+      <td>{{ comida.name }}</td>
+      <td>{{ comida.price | currency:'COP':'symbol' }}</td>
+      <td>{{ comida.description }}</td>
+      <td><img [src]="comida.imagen" alt="{{ comida.name }}" width="100" height="80" /></td>
+      <td>
+        <button class="btn btn-info btn-sm" (click)="seleccionarComida(comida)">Seleccionar</button>
+        <button class="btn btn-warning btn-sm" (click)="editarComida(comida)">Editar</button>
+        <button class="btn btn-danger btn-sm" (click)="eliminarComida(comida.id)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Mostrar el formulario si se está editando o agregando -->
+<app-comida-detail
+  *ngIf="modoEdicion"
+  [comida]="comidaSeleccionada!"
+  [editando]="modoEdicion"
+  (onGuardar)="guardarComida($event)"
+  (onCancelar)="cancelarEdicion()"
+></app-comida-detail>

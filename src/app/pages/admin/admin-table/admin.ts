@@ -1,0 +1,16 @@
+// src/app/pages/admin/admin.ts
+
+export class Admin {
+    id: number;
+    name: string;
+    username: string;
+    password: string;
+  
+    constructor(id: number, name: string, username: string, password: string) {
+      this.id = id;
+      this.name = name;
+      this.username = username;
+      this.password = password;
+    }
+  }
+  
