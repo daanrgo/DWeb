@@ -1,6 +1,7 @@
 // src/app/pages/adicional/adicional-table/adicional-table.component.ts
 
 import { Component } from '@angular/core';
+import { Adicional } from '../adicional-table/adicional';
 
 @Component({
   selector: 'app-adicional-table',
@@ -8,36 +9,41 @@ import { Component } from '@angular/core';
   styleUrls: ['./adicional-table.component.css']
 })
 export class AdicionalTableComponent {
-
-  adicionalList: Adicional[] = [
-    {
-      id: 1,
-      name: 'Queso Extra',
-      price: 2000
-    },
-    {
-      id: 2,
-      name: 'Tocineta',
-      price: 3000
-    }
+  adicionales: Adicional[] = [
+    { id: 1, name: 'Queso Extra', price: 2000 },
+    { id: 2, name: 'Tocineta', price: 3000 }
   ];
 
-  seleccionarAdicional(adicional: Adicional): void {
-    console.log('Seleccionar adicional:', adicional);
+  adicionalSeleccionado: Adicional | null = null;
+  modoEdicion: boolean = false;
+
+  nuevoAdicional(): void {
+    this.adicionalSeleccionado = new Adicional(0, '', 0);
+    this.modoEdicion = true;
   }
 
-  editarAdicional(adicional: Adicional): void {
-    console.log('Editar adicional:', adicional);
+  editar(adicional: Adicional): void {
+    this.adicionalSeleccionado = { ...adicional };
+    this.modoEdicion = true;
   }
 
-  eliminarAdicional(id: number): void {
-    this.adicionalList = this.adicionalList.filter(a => a.id !== id);
-    console.log('Adicional eliminado:', id);
+  eliminar(id: number): void {
+    this.adicionales = this.adicionales.filter(a => a.id !== id);
   }
-}
 
-interface Adicional {
-  id: number;
-  name: string;
-  price: number;
+  guardar(adicional: Adicional): void {
+    const index = this.adicionales.findIndex(a => a.id === adicional.id);
+    if (index >= 0) {
+      this.adicionales[index] = adicional;
+    } else {
+      adicional.id = this.adicionales.length + 1;
+      this.adicionales.push(adicional);
+    }
+    this.cancelar();
+  }
+
+  cancelar(): void {
+    this.adicionalSeleccionado = null;
+    this.modoEdicion = false;
+  }
 }

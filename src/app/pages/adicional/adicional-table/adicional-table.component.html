@@ -1,1 +1,38 @@
-<p>adicional-table works!</p>
+<!-- src/app/pages/adicional/adicional-table/adicional-table.component.html -->
+
+<div class="container mt-4">
+    <h2>Listado de Adicionales</h2>
+  
+    <button class="btn btn-success mb-3" (click)="nuevoAdicional()">Agregar</button>
+  
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let adicional of adicionales">
+          <td>{{ adicional.id }}</td>
+          <td>{{ adicional.name }}</td>
+          <td>{{ adicional.price | currency: 'COP':'symbol' }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm me-2" (click)="editar(adicional)">Editar</button>
+            <button class="btn btn-danger btn-sm" (click)="eliminar(adicional.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <app-adicional-form
+      *ngIf="modoEdicion"
+      [adicional]="adicionalSeleccionado!"
+      [editando]="modoEdicion"
+      (onGuardar)="guardar($event)"
+      (onCancelar)="cancelar()"
+    ></app-adicional-form>
+  </div>
+  

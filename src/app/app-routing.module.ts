@@ -5,16 +5,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { LandingComponent } from './pages/landing/landing.component';
 import { ComidaTableComponent } from './pages/comidas/comidas-table/comidas-table.component';
 import { AdicionalTableComponent } from './pages/adicional/adicional-table/adicional-table.component';
-
-
+import { ClienteTableComponent } from './pages/cliente/cliente-table/cliente-table.component'; // IMPORTANTE
 
 const routes: Routes = [
+  { path: '', redirectTo: 'landing', pathMatch: 'full' },
   { path: 'landing', component: LandingComponent },
   { path: 'comidas', component: ComidaTableComponent },
-  { path: '', redirectTo: 'landing', pathMatch: 'full' },
-  { path: '**', redirectTo: 'landing' },
   { path: 'adicionales', component: AdicionalTableComponent },
-  { path: '', redirectTo: '/adicionales', pathMatch: 'full' }, // opcional
+  { path: 'clientes', component: ClienteTableComponent }, // ✅ NUEVA RUTA
+  { path: '**', redirectTo: 'landing' }
 ];
 
 @NgModule({

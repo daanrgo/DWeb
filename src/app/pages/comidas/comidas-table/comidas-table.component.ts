@@ -30,7 +30,7 @@ export class ComidaTableComponent implements OnInit {
       name: 'Pizza Margarita',
       price: 20000,
       description: 'Queso mozzarella, tomate y albahaca.',
-      imagen: 'assets/images/pizza1.png'
+      imagen: 'assets/images/burger3.png'
     }
   ];
 
