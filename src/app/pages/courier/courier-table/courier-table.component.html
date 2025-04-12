@@ -1,1 +1,49 @@
-<p>courier-table works!</p>
+// src/app/pages/courier/courier-table/courier-table.component.html
+
+<div class="container mt-4">
+  <h2 class="mb-3">Lista de Couriers</h2>
+
+  <button class="btn btn-success mb-3" (click)="nuevoCourier()">Agregar</button>
+
+  <table class="table table-striped table-dark">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Correo</th>
+        <th>Teléfono</th>
+        <th>ID Gubernamental</th>
+        <th>Disponible</th>
+        <th>Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let courier of couriers">
+        <td>{{ courier.id }}</td>
+        <td>{{ courier.username }}</td>
+        <td>{{ courier.password }}</td>
+        <td>{{ courier.name }}</td>
+        <td>{{ courier.lastName }}</td>
+        <td>{{ courier.email }}</td>
+        <td>{{ courier.phone }}</td>
+        <td>{{ courier.governmentId }}</td>
+        <td>{{ courier.availabilityStatus ? 'Sí' : 'No' }}</td>
+        <td>
+          <button class="btn btn-primary btn-sm me-2" (click)="editarCourier(courier)">Editar</button>
+          <button class="btn btn-danger btn-sm" (click)="eliminarCourier(courier.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <app-courier-detail
+    *ngIf="courierSeleccionado"
+    [courier]="courierSeleccionado"
+    [editando]="modoEdicion"
+    (onGuardar)="guardarCourier($event)"
+    (onCancelar)="cancelar()"
+  ></app-courier-detail>
+</div>

@@ -1,32 +1,40 @@
-  // src/app/pages/paymentType/payment-type-table/payment-type-table.component.ts
-  
-  import { Component, OnInit } from '@angular/core';
-  import { PaymentType } from './paymentType';
-  
-  @Component({
-    selector: 'app-payment-type-table',
-    templateUrl: './payment-type-table.component.html',
-    styleUrls: ['./payment-type-table.component.css']
-  })
-  export class PaymentTypeTableComponent implements OnInit {
-    paymentTypes: PaymentType[] = [
-      { id: 1, description: 'Efectivo' },
-      { id: 2, description: 'Tarjeta de Crédito' },
-      { id: 3, description: 'Transferencia' }
-    ];
-  
-    ngOnInit(): void {}
-  
-    seleccionarPaymentType(paymentType: PaymentType): void {
-      console.log('Tipo de pago seleccionado:', paymentType);
-    }
-  
-    editarPaymentType(paymentType: PaymentType): void {
-      console.log('Editar tipo de pago:', paymentType);
-    }
-  
-    eliminarPaymentType(id: number): void {
-      this.paymentTypes = this.paymentTypes.filter(p => p.id !== id);
-      console.log('Tipo de pago eliminado con ID:', id);
-    }
+// src/app/pages/paymentType/payment-type-table/payment-type-table.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { PaymentType } from './paymentType';
+import { PaymentTypeService } from 'src/app/services/payment-type.service';
+
+@Component({
+  selector: 'app-payment-type-table',
+  templateUrl: './payment-type-table.component.html',
+  styleUrls: ['./payment-type-table.component.css']
+})
+export class PaymentTypeTableComponent implements OnInit {
+  paymentTypes: PaymentType[] = [];
+
+  constructor(private paymentTypeService: PaymentTypeService) {}
+
+  ngOnInit(): void {
+    this.loadPaymentTypes();
   }
+
+  loadPaymentTypes(): void {
+    this.paymentTypeService.getAll().subscribe(data => {
+      this.paymentTypes = data;
+    });
+  }
+
+  seleccionarPaymentType(paymentType: PaymentType): void {
+    console.log('Tipo de pago seleccionado:', paymentType);
+  }
+
+  editarPaymentType(paymentType: PaymentType): void {
+    console.log('Editar tipo de pago:', paymentType);
+  }
+
+  deletePaymentType(id: number): void {
+    this.paymentTypeService.delete(id).subscribe(() => {
+      this.paymentTypes = this.paymentTypes.filter(pt => pt.id !== id);
+    });
+  }
+}

@@ -1,0 +1,77 @@
+<div class="card mt-4">
+    <div class="card-body">
+      <form (ngSubmit)="onGuardar.emit(operator)">
+        <h5 class="card-title mb-3">
+          {{ editando ? 'Editar Operador' : 'Nuevo Operador' }}
+        </h5>
+  
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            type="text"
+            id="username"
+            class="form-control"
+            [(ngModel)]="operator.username"
+            name="username"
+            required
+          />
+        </div>
+  
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            [(ngModel)]="operator.password"
+            name="password"
+            required
+          />
+        </div>
+  
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre</label>
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            [(ngModel)]="operator.name"
+            name="name"
+            required
+          />
+        </div>
+  
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Apellido</label>
+          <input
+            type="text"
+            id="lastName"
+            class="form-control"
+            [(ngModel)]="operator.lastName"
+            name="lastName"
+            required
+          />
+        </div>
+  
+        <div class="mb-3">
+          <label for="location" class="form-label">Ubicación</label>
+          <input
+            type="text"
+            id="location"
+            class="form-control"
+            [(ngModel)]="operator.location"
+            name="location"
+            required
+          />
+        </div>
+  
+        <button type="submit" class="btn btn-primary me-2">
+          {{ editando ? 'Actualizar' : 'Agregar' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="onCancelar.emit()">
+          Cancelar
+        </button>
+      </form>
+    </div>
+  </div>
+  

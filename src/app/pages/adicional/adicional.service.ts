@@ -1,4 +1,5 @@
 // src/app/pages/adicional/adicional.service.ts
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Adicional } from './adicional-table/adicional';
@@ -12,23 +13,16 @@ export class AdicionalService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<Adicional[]> {
+  listar(): Observable<Adicional[]> {
     return this.http.get<Adicional[]>(this.apiUrl);
   }
 
-  getById(id: number): Observable<Adicional> {
-    return this.http.get<Adicional>(`${this.apiUrl}/${id}`);
+  guardar(adicional: Adicional): Observable<Adicional> {
+    return adicional.id ? this.http.put<Adicional>(`${this.apiUrl}/${adicional.id}`, adicional)
+                        : this.http.post<Adicional>(this.apiUrl, adicional);
   }
 
-  create(adicional: Adicional): Observable<Adicional> {
-    return this.http.post<Adicional>(`${this.apiUrl}/create`, adicional);
-  }
-
-  update(adicional: Adicional): Observable<Adicional> {
-    return this.http.post<Adicional>(`${this.apiUrl}/update`, adicional);
-  }
-
-  delete(id: number): Observable<void> {
-    return this.http.get<void>(`${this.apiUrl}/delete/${id}`);
+  eliminar(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

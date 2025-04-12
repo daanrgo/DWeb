@@ -1,0 +1,19 @@
+<!-- src/app/pages/bills/bill-detail/bill-detail.component.html -->
+
+<div *ngIf="bill">
+    <h2>Detalles de la Factura #{{ bill.id }}</h2>
+    <ul>
+      <li><strong>Estado:</strong> {{ bill.status }}</li>
+      <li><strong>Fecha de creación:</strong> {{ bill.creationDate | date: 'short' }}</li>
+      <li><strong>Dirección:</strong> {{ bill.address }}</li>
+      <li><strong>Operador:</strong> {{ bill.operator || 'N/A' }}</li>
+      <li><strong>Cliente:</strong> {{ bill.client || 'N/A' }}</li>
+      <li><strong>Repartidor:</strong> {{ bill.courier || 'N/A' }}</li>
+      <li><strong>Tipo de pago:</strong> {{ bill.paymentType || 'N/A' }}</li>
+    </ul>
+  </div>
+  
+  <div *ngIf="!bill">
+    <p>Cargando detalles de la factura...</p>
+  </div>
+  

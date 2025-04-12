@@ -1,1 +1,40 @@
-<p>order-table works!</p>
+<!-- src/app/pages/order/order-table/order-table.component.html -->
+
+<div class="container mt-4">
+    <h2 class="mb-3">Lista de Ordenes</h2>
+  
+    <button class="btn btn-success mb-3" (click)="nuevoOrder()">Agregar Orden</button>
+  
+    <table class="table table-striped table-dark">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cantidad</th>
+          <th>Comida ID</th>
+          <th>Factura ID</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.id }}</td>
+          <td>{{ order.quantity }}</td>
+          <td>{{ order.comidaId }}</td>
+          <td>{{ order.billId }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm me-2" (click)="editar(order)">Editar</button>
+            <button class="btn btn-danger btn-sm" (click)="eliminarOrder(order.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <app-order-detail
+      *ngIf="orderSeleccionado"
+      [order]="orderSeleccionado"
+      [editando]="modoEdicion"
+      (onGuardar)="guardar($event)"
+      (onCancelar)="cancelar()"
+    ></app-order-detail>
+  </div>
+  

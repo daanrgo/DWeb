@@ -1,1 +1,35 @@
-<p>bill-table works!</p>
+<div class="container mt-4">
+    <h2>Lista de Pedidos</h2>
+  
+    <table class="table table-bordered table-hover mt-3">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th>Dirección</th>
+          <th>Cliente</th>
+          <th>Courier</th>
+          <th>Método de Pago</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bill of bills">
+          <td>{{ bill.id }}</td>
+          <td>{{ bill.status }}</td>
+          <td>{{ bill.creationDate | date:'short' }}</td>
+          <td>{{ bill.address }}</td>
+          <td>{{ bill.client }}</td>
+          <td>{{ bill.courier }}</td>
+          <td>{{ bill.paymentType }}</td>
+          <td>
+            <a [routerLink]="['/bills/detail', bill.id]" class="btn btn-sm btn-info me-2">Ver</a>
+            <a [routerLink]="['/bills/edit', bill.id]" class="btn btn-sm btn-primary me-2">Editar</a>
+            <button class="btn btn-sm btn-danger">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

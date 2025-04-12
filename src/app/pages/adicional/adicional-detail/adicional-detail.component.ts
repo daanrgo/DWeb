@@ -3,22 +3,23 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Adicional } from '../adicional-table/adicional';
 
+
 @Component({
   selector: 'app-adicional-detail',
   templateUrl: './adicional-detail.component.html',
   styleUrls: ['./adicional-detail.component.css']
 })
 export class AdicionalDetailComponent {
-  @Input() adicional!: Adicional;
-  @Input() editando = false;
+  @Input() adicional: Adicional = new Adicional();
+  @Input() editando: boolean = false;
   @Output() onGuardar = new EventEmitter<Adicional>();
   @Output() onCancelar = new EventEmitter<void>();
 
-  guardar(): void {
+  guardar() {
     this.onGuardar.emit(this.adicional);
   }
 
-  cancelar(): void {
+  cancelar() {
     this.onCancelar.emit();
   }
 }

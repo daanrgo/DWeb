@@ -19,15 +19,22 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
+    "types": ["jasmine"], // ← Soluciona errores de describe()/it() en specs
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "esModuleInterop": true // ← Ayuda con imports de librerías
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
-  }
+    "strictTemplates": true,
+    "strictNullChecks": true // ← Mejor control de tipos
+  },
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts" // ← Opcional: excluye tests en compilación principal
+  ]
 }

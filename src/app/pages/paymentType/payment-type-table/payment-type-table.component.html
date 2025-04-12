@@ -1,1 +1,22 @@
-<p>payment-type-table works!</p>
+// src/app/pages/paymentType/payment-type-table/payment-type-table.component.html
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pt of paymentTypes">
+        <td>{{ pt.id }}</td>
+        <td>{{ pt.description }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="deletePaymentType(pt.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

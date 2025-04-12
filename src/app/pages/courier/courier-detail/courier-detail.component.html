@@ -1,0 +1,51 @@
+<div class="card p-4 mt-4">
+    <h3>{{ editando ? 'Editar Courier' : 'Agregar Courier' }}</h3>
+  
+    <form (ngSubmit)="guardar()">
+      <div class="row mb-3">
+        <div class="col">
+          <label for="username" class="form-label">Username</label>
+          <input id="username" name="username" type="text" class="form-control" [(ngModel)]="courier.username" required />
+        </div>
+        <div class="col">
+          <label for="password" class="form-label">Password</label>
+          <input id="password" name="password" type="password" class="form-control" [(ngModel)]="courier.password" required />
+        </div>
+      </div>
+  
+      <div class="row mb-3">
+        <div class="col">
+          <label for="name" class="form-label">Nombre</label>
+          <input id="name" name="name" type="text" class="form-control" [(ngModel)]="courier.name" required />
+        </div>
+        <div class="col">
+          <label for="lastName" class="form-label">Apellido</label>
+          <input id="lastName" name="lastName" type="text" class="form-control" [(ngModel)]="courier.lastName" required />
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo</label>
+        <input id="email" name="email" type="email" class="form-control" [(ngModel)]="courier.email" required />
+      </div>
+  
+      <div class="mb-3">
+        <label for="phone" class="form-label">Teléfono</label>
+        <input id="phone" name="phone" type="number" class="form-control" [(ngModel)]="courier.phone" required />
+      </div>
+  
+      <div class="mb-3">
+        <label for="governmentId" class="form-label">ID Oficial</label>
+        <input id="governmentId" name="governmentId" type="text" class="form-control" [(ngModel)]="courier.governmentId" required />
+      </div>
+  
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="availabilityStatus" name="availabilityStatus" [(ngModel)]="courier.availabilityStatus">
+        <label class="form-check-label" for="availabilityStatus">Disponible</label>
+      </div>
+  
+      <button type="submit" class="btn btn-primary me-2">{{ editando ? 'Actualizar' : 'Agregar' }}</button>
+      <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+    </form>
+  </div>
+  

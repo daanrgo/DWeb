@@ -1,5 +1,6 @@
 // src/app/pages/orders/order.ts
 
+
 export class Order {
     id: number = 0;
     quantity: number = 0;

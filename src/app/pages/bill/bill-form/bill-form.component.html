@@ -1,0 +1,33 @@
+<!-- src/app/pages/bills/bill-form.component.html -->
+<div class="container mt-4">
+    <h2>Crear Pedido</h2>
+  
+    <form (ngSubmit)="save()">
+      <div class="mb-3">
+        <label class="form-label">Dirección</label>
+        <input type="text" class="form-control" [(ngModel)]="bill.address" name="address" required />
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Cliente</label>
+        <input type="text" class="form-control" [(ngModel)]="bill.client" name="client" required />
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Courier</label>
+        <input type="text" class="form-control" [(ngModel)]="bill.courier" name="courier" />
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Método de Pago</label>
+        <input type="text" class="form-control" [(ngModel)]="bill.paymentType" name="paymentType" />
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Estado</label>
+        <input type="number" class="form-control" [(ngModel)]="bill.status" name="status" />
+      </div>
+  
+      <button type="submit" class="btn btn-success">Guardar</button>
+    </form>
+  </div>
