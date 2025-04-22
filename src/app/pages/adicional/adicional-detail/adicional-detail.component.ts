@@ -2,7 +2,7 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Adicional } from '../adicional-table/adicional';
-
+import { AdicionalService } from 'src/app/services/adicional.service';
 
 @Component({
   selector: 'app-adicional-detail',
@@ -15,11 +15,20 @@ export class AdicionalDetailComponent {
   @Output() onGuardar = new EventEmitter<Adicional>();
   @Output() onCancelar = new EventEmitter<void>();
 
-  guardar() {
-    this.onGuardar.emit(this.adicional);
+  constructor(private adicionalService: AdicionalService) {}
+
+  guardar(): void {
+    const peticion = this.adicional.id
+      ? this.adicionalService.updateAdicional(this.adicional)
+      : this.adicionalService.addAdicional(this.adicional);
+
+    peticion.subscribe({
+      next: (result) => this.onGuardar.emit(result),
+      error: (err) => console.error('Error al guardar adicional', err)
+    });
   }
 
-  cancelar() {
+  cancelar(): void {
     this.onCancelar.emit();
   }
 }

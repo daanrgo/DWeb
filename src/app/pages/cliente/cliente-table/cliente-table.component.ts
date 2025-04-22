@@ -3,6 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Cliente } from './cliente';
 import { ClienteService } from 'src/app/services/cliente.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cliente-table',
@@ -11,8 +12,6 @@ import { ClienteService } from 'src/app/services/cliente.service';
 })
 export class ClienteTableComponent implements OnInit {
   clientes: Cliente[] = [];
-  clienteSeleccionado: Cliente | null = null;
-  modoEdicion: boolean = false;
 
   constructor(private clienteService: ClienteService) {}
 
@@ -21,40 +20,27 @@ export class ClienteTableComponent implements OnInit {
   }
 
   cargarClientes(): void {
-    this.clienteService.getClientes().subscribe(clientes => {
-      this.clientes = clientes;
-    });
-  }
-
-  nuevoCliente(): void {
-    this.clienteSeleccionado = new Cliente(0, '', '', '', '', '', 0, '');
-    this.modoEdicion = true;
-  }
-
-  editar(cliente: Cliente): void {
-    this.clienteSeleccionado = { ...cliente };
-    this.modoEdicion = true;
+    this.clienteService.getAll().subscribe(
+      (data: Cliente[]) => {
+        this.clientes = data;
+      },
+      (error) => {
+        console.error('Error al cargar clientes:', error);
+      }
+    );
   }
 
   eliminarCliente(id: number): void {
-    this.clienteService.deleteCliente(id).subscribe(() => {
-      this.cargarClientes();
-    });
-  }
-
-  guardar(cliente: Cliente): void {
-    if (cliente.id) {
-      this.clienteService.updateCliente(cliente).subscribe(() => this.cargarClientes());
-    } else {
-      this.clienteService.addCliente(cliente).subscribe(() => this.cargarClientes());
+    if (confirm('¿Estás seguro de eliminar este cliente?')) {
+      this.clienteService.delete(id).subscribe(
+        () => {
+          this.cargarClientes(); // Recargar la tabla después de eliminar
+        },
+        (error) => {
+          console.error('Error al eliminar cliente:', error);
+        }
+      );
     }
-    this.cancelar();
-  }
-
-  cancelar(): void {
-    this.modoEdicion = false;
-    this.clienteSeleccionado = null;
   }
 }
-
 

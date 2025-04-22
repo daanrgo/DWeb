@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Oswald', sans-serif;
+}
+
+.detalle-container {
+  display: flex;
+  width: 100%;
+  height: auto;
+  background: #2A2420;
+}
+
+.info-hamburguesa {
+  width: 55%;
+  padding: 30px;
+  background: #efe9ce;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.input-item {
+  width: 48%;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-campo {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid #A0522D;
+  background: linear-gradient(to right, #FDFCFB, #E2D1C3);
+  font-size: 1rem;
+  margin-bottom: 15px;
+  transition: all 0.3s ease-in-out;
+}
+
+.input-campo:focus {
+  outline: none;
+  border-color: #8B4513;
+  background: white;
+  box-shadow: 0px 0px 8px rgba(160, 82, 45, 0.7);
+}
+
+.btn-adicionales {
+  background: #A0522D;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  text-transform: uppercase;
+  transition: background 0.3s ease;
+}
+
+.btn-adicionales:hover {
+  background: #8B4513;
+}
+
+.social-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 50px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.google-btn, .phone-btn, .facebook-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.google-btn { background: #4285F4; }
+.google-btn:hover { background: #357AE8; }
+.phone-btn { background: #34A853; }
+.phone-btn:hover { background: #2C8C47; }
+.facebook-btn { background: #3B5998; }
+.facebook-btn:hover { background: #2E437A; }
+.container {
+    padding-top: 130px;
+  }  

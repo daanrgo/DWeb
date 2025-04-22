@@ -1,46 +1,99 @@
-<!-- src/app/pages/cliente/cliente-form/cliente-form.component.html -->
+// src/app/pages/cliente/cliente-form/cliente-form.component.html
 
-<div class="card p-3 mb-3">
-    <h3>{{ editando ? 'Editar Cliente' : 'Agregar Cliente' }}</h3>
-  
-    <form (ngSubmit)="guardar()">
-      <div class="form-group mb-2">
-        <label for="username">Usuario:</label>
-        <input id="username" name="username" type="text" class="form-control" [(ngModel)]="cliente.username" required />
+<section class="detalle-container">
+  <form class="info-hamburguesa" (ngSubmit)="onSubmit()">
+    <a routerLink="/clientes">
+      <img src="/assets/images/flechaAtras.png" alt="flecha atras">
+    </a>
+
+    <p class="crear_titulo">{{ editando ? 'Modificar Usuario' : 'Crear Usuario' }}</p>
+
+    <div class="input-group">
+      <div class="input-item">
+        <h3>Usuario</h3>
+        <input [(ngModel)]="cliente.username" name="username" required type="text" class="input-campo" placeholder="Nombre de Usuario">
       </div>
-  
-      <div class="form-group mb-2">
-        <label for="password">Contraseña:</label>
-        <input id="password" name="password" type="password" class="form-control" [(ngModel)]="cliente.password" required />
+      <div class="input-item">
+        <h3>Contraseña</h3>
+        <input [(ngModel)]="cliente.password" name="password" required type="password" class="input-campo" placeholder="Contraseña">
       </div>
-  
-      <div class="form-group mb-2">
-        <label for="name">Nombre:</label>
-        <input id="name" name="name" type="text" class="form-control" [(ngModel)]="cliente.name" required />
+    </div>
+
+    <div class="input-group">
+      <div class="input-item">
+        <h3>Nombre</h3>
+        <input [(ngModel)]="cliente.name" name="name" required type="text" class="input-campo" placeholder="Nombre">
       </div>
-  
-      <div class="form-group mb-2">
-        <label for="lastName">Apellido:</label>
-        <input id="lastName" name="lastName" type="text" class="form-control" [(ngModel)]="cliente.lastName" required />
+      <div class="input-item">
+        <h3>Apellido</h3>
+        <input [(ngModel)]="cliente.lastName" name="lastName" required type="text" class="input-campo" placeholder="Apellido">
       </div>
-  
-      <div class="form-group mb-2">
-        <label for="email">Correo:</label>
-        <input id="email" name="email" type="email" class="form-control" [(ngModel)]="cliente.email" />
+    </div>
+
+    <div class="input-group">
+      <div class="input-item">
+        <h3>Correo</h3>
+        <input [(ngModel)]="cliente.email" name="email" required type="email" class="input-campo" placeholder="Ej: portico@gmail.com">
       </div>
-  
-      <div class="form-group mb-2">
-        <label for="phone">Teléfono:</label>
-        <input id="phone" name="phone" type="number" class="form-control" [(ngModel)]="cliente.phone" required />
+      <div class="input-item">
+        <h3>Telefono</h3>
+        <input [(ngModel)]="cliente.phone" name="phone" required type="text" class="input-campo" placeholder="Número de contacto">
       </div>
-  
-      <div class="form-group mb-3">
-        <label for="address">Dirección:</label>
-        <input id="address" name="address" type="text" class="form-control" [(ngModel)]="cliente.address" required />
+    </div>
+
+    <div class="input-group">
+      <div class="input-item">
+        <h3>Dirección</h3>
+        <input [(ngModel)]="cliente.address" name="address" required type="text" class="input-campo" placeholder="Dirección de entrega">
       </div>
-  
-      <button type="submit" class="btn btn-primary me-2">{{ editando ? 'Actualizar' : 'Agregar' }}</button>
-      <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
-    </form>
+    </div>
+
+    <hr>
+    <button class="btn-adicionales" type="submit">{{ editando ? 'ACTUALIZAR USUARIO' : 'CREAR USUARIO' }}</button>
+  </form>
+
+  <div class="social-login">
+    <button class="google-btn"><i class="bx bxl-google"></i> Continuar con Google</button>
+    <button class="phone-btn"><i class="bx bxs-phone"></i> Continuar con tu celular</button>
+    <button class="facebook-btn"><i class="bx bxl-facebook"></i> Continuar con Facebook</button>
   </div>
-  
+</section>
+
+<footer class="footer">
+  <div class="sobre_nosotros columna_footer">
+    <ul class="list">
+      <li><div class="logo_footer"><img src="/assets/images/NuevoLogo.png" alt=""></div></li>
+      <li><h3>Teléfono: 512-345-678</h3></li>
+      <li><h3>Dirección: Paseo de la castellana</h3></li>
+      <li><h3>Bogotá - Colombia</h3></li>
+    </ul>
+  </div>
+  <span class="division_vertical"></span>
+  <div class="columna_footer">
+    <ul class="list">
+      <li><h2>Productos</h2></li>
+      <li><a href="#">El Portico</a></li>
+      <li><a href="#">Fungi Premium</a></li>
+      <li><a href="#">Marinera</a></li>
+      <li><a href="#">La Exquisita</a></li>
+      <li><a href="#">El Principe</a></li>
+      <li><a href="#">La King</a></li>
+      <li><a href="#">El Noble</a></li>
+    </ul>
+  </div>
+  <span class="division_vertical"></span>
+  <div class="columna_footer">
+    <ul class="list">
+      <li><h2>Contacto</h2></li>
+      <li><a href="#">FAQ</a></li>
+      <li><a href="#">Servicio al Cliente</a></li>
+      <li><a href="#">Sobre Nosotros</a></li>
+      <li><a href="#">Políticas de Privacidad</a></li>
+      <li class="social">
+        <a href="#"><i class='bx bxl-facebook-circle'></i></a>
+        <a href="#"><i class='bx bxl-linkedin-square'></i></a>
+        <a href="#"><i class='bx bxl-instagram'></i></a>
+      </li>
+    </ul>
+  </div>
+</footer>

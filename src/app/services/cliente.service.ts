@@ -7,28 +7,29 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ClienteService {
-  private apiUrl = 'http://localhost:8010/clientes';
+  private apiUrl = 'http://localhost:8010/api/clientes';
 
   constructor(private http: HttpClient) {}
 
-  getClientes(): Observable<Cliente[]> {
+  getAll(): Observable<Cliente[]> {
     return this.http.get<Cliente[]>(this.apiUrl);
   }
 
-  addCliente(cliente: Cliente): Observable<Cliente> {
-    return this.http.post<Cliente>(`${this.apiUrl}/create`, cliente);
-  }
-
-  updateCliente(cliente: Cliente): Observable<Cliente> {
-    return this.http.post<Cliente>(`${this.apiUrl}/update`, cliente);
-  }
-
-  deleteCliente(id: number): Observable<void> {
-    return this.http.get<void>(`${this.apiUrl}/delete/${id}`);
-  }
-
-  getClienteById(id: number): Observable<Cliente> {
+  getById(id: number): Observable<Cliente> {
     return this.http.get<Cliente>(`${this.apiUrl}/${id}`);
   }
-}
 
+  create(cliente: Cliente): Observable<Cliente> {
+    console.log('Datos que se enviarán:', cliente);
+    return this.http.post<Cliente>(this.apiUrl, cliente);
+  }
+
+
+  update(id: number, cliente: Cliente): Observable<Cliente> {
+    return this.http.put<Cliente>(`${this.apiUrl}/${id}`, cliente);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+}

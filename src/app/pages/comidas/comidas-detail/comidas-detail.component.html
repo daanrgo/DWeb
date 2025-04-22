@@ -1,33 +1,77 @@
-<!-- src/app/pages/comidas/comida-detail/comidas-detail.component.html -->
-
-<div class="card p-3 mb-3">
-    <h3>{{ editando ? 'Editar Comida' : 'Agregar Comida' }}</h3>
-  
-    <form (ngSubmit)="guardar()">
-      <div class="form-group mb-2">
-        <label for="name">Nombre:</label>
-        <input id="name" name="name" type="text" class="form-control" [(ngModel)]="comida.name" required />
-      </div>
-  
-      <div class="form-group mb-2">
-        <label for="price">Precio:</label>
-        <input id="price" name="price" type="number" class="form-control" [(ngModel)]="comida.price" required />
-      </div>
-  
-      <div class="form-group mb-2">
-        <label for="description">Descripción:</label>
-        <textarea id="description" name="description" class="form-control" [(ngModel)]="comida.description" rows="2"></textarea>
-      </div>
-  
-      <div class="form-group mb-3">
-        <label for="imagen">URL Imagen:</label>
-        <input id="imagen" name="imagen" type="text" class="form-control" [(ngModel)]="comida.imagen" />
-      </div>
-  
-      <button type="submit" class="btn btn-primary me-2">
-        {{ editando ? 'Actualizar' : 'Agregar' }}
-      </button>
-      <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
-    </form>
+<div class="detail-container">
+  <div class="imagen-separadora">
+    <img src="assets/images/NuevoLogo.png" alt="Logo" class="logo-separador">
   </div>
-  
+
+  <div class="detail-content">
+    <div class="info-section">
+      <a routerLink="/comidas" class="back-button">
+        <img src="assets/images/flechaAtras.png" alt="Volver">
+      </a>
+
+      <h3>Detalle de Comida</h3>
+      <h1>{{comida.name}}</h1>
+      
+      <p class="description">
+        <strong>Descripción:</strong> {{comida.description}}
+      </p>
+      
+      <hr>
+      <p class="price"><strong>Precio:</strong> {{comida.price | currency:'COP':'symbol':'1.0'}}</p>
+      <hr>
+      
+      <div class="image-container">
+        <img [src]="comida.imagen" [alt]="comida.name" class="food-image">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group" *ngIf="isEditing">
+          <label for="name">Nombre:</label>
+          <input id="name" name="name" type="text" class="form-control" 
+                 [(ngModel)]="comida.name" required>
+        </div>
+
+        <div class="form-group" *ngIf="isEditing">
+          <label for="price">Precio:</label>
+          <input id="price" name="price" type="number" class="form-control" 
+                 [(ngModel)]="comida.price" required>
+        </div>
+
+        <div class="form-group" *ngIf="isEditing">
+          <label for="description">Descripción:</label>
+          <textarea id="description" name="description" class="form-control" 
+                    [(ngModel)]="comida.description" rows="3"></textarea>
+        </div>
+
+        <div class="form-group" *ngIf="isEditing">
+          <label for="imagen">URL Imagen:</label>
+          <input id="imagen" name="imagen" type="text" class="form-control" 
+                 [(ngModel)]="comida.imagen">
+        </div>
+
+        <div class="adicionales-section" *ngIf="comida.adicionales && comida.adicionales.length > 0">
+          <h3>Adicionales</h3>
+          <div class="adicionales-list">
+            <div class="adicional-item" *ngFor="let adicional of comida.adicionales; trackBy: trackByAdicional">
+              <input type="checkbox" id="adicional-{{adicional.id}}" 
+                     [checked]="comida.adicionalesSeleccionados?.[adicional.id] || false">
+              <label for="adicional-{{adicional.id}}">{{adicional.name}}</label>
+              <span class="adicional-price">{{adicional.price | currency:'COP':'symbol':'1.0'}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button type="submit" class="btn-save" *ngIf="isEditing">
+            {{isEditing ? 'Actualizar' : 'Agregar'}}
+          </button>
+          <button type="button" class="btn-cancel" (click)="onCancel()">
+            {{isEditing ? 'Cancelar' : 'Volver'}}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

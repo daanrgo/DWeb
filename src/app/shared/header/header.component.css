@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+header {
+  background: rgba(70, 67, 62, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 80px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  max-width: 1000px;
+}
+
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-left {
+  margin-left: 110px;
+}
+
+.logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logo img {
+  height: 100px;
+  display: block;
+}
+
+.logo img:hover {
+  transform: scale(1.05);
+}
+
+.indices {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+
+.indices button, .btn-pedido button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+}
+
+.indices button:hover {
+  color: #A0522D;
+  transform: translateY(-2px);
+}
+
+.btn-pedido button {
+  background-color: #A0522D;
+  border-radius: 25px;
+  font-weight: bold;
+  padding: 0.7rem 1.5rem;
+}
+
+.btn-pedido button:hover {
+  background-color: #8B4513;
+  transform: scale(1.05);
+}
+
+.barras {
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .barras {
+    display: block;
+  }
+
+  .nav-left .indices, 
+  .nav-right .indices {
+    display: none;
+  }
+
+  .nav-right {
+    justify-content: flex-end;
+  }
+}

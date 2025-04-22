@@ -6,12 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+
 // Landing
 import { LandingComponent } from './pages/landing/landing.component';
 
 // Comidas
 import { ComidasFormComponent } from './pages/comidas/comidas-form/comidas-form.component';
-import { ComidaTableComponent } from './pages/comidas/comidas-table/comidas-table.component';
+import { ComidasTableComponent } from './pages/comidas/comidas-table/comidas-table.component';
 import { ComidaDetailComponent } from './pages/comidas/comidas-detail/comidas-detail.component';
 
 // Adicionales
@@ -41,6 +42,10 @@ import { BillDetailComponent } from './pages/bill/bill-detail/bill-detail.compon
 import { BillFormComponent } from './pages/bill/bill-form/bill-form.component';
 import { PaymentTypeFormComponent } from './pages/paymentType/payment-type-form/payment-type-form.component';
 import { PaymentTypeDetailComponent } from './pages/paymentType/payment-type-detail/payment-type-detail.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { CarritoComponent } from './pages/order/carrito/carrito.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +54,7 @@ import { PaymentTypeDetailComponent } from './pages/paymentType/payment-type-det
     
     // Comidas
     ComidasFormComponent,
-    ComidaTableComponent,
+    ComidasTableComponent,
     ComidaDetailComponent,
     
     // Adicionales
@@ -78,14 +83,18 @@ import { PaymentTypeDetailComponent } from './pages/paymentType/payment-type-det
     BillDetailComponent,
     BillFormComponent,
     PaymentTypeFormComponent,
-    PaymentTypeDetailComponent
+    PaymentTypeDetailComponent,
+    FooterComponent,
+    HeaderComponent,
+    CarritoComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,          // Para template-driven forms (ngModel)
     ReactiveFormsModule,  // Para reactive forms (opcional pero recomendado)
     HttpClientModule,     // Para peticiones HTTP
-    AppRoutingModule      // Rutas
+    AppRoutingModule,      // Rutas
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,6 +3,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Order } from '../pages/order/order-table/order';
+import { DTOIdUsuarioComidas } from '../pages/comidas/comidas-table/comida';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -30,4 +31,9 @@ export class OrderService {
   deleteOrder(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
   }
+  enviarPedido(dto: DTOIdUsuarioComidas): Observable<any> {
+    return this.http.post(`${this.apiUrl}/crear-pedido`, dto);
+  }
+  
+
 }

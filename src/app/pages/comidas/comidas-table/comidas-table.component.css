@@ -1,0 +1,88 @@
+.container {
+    padding: 20px;
+    background-color: #2a2420;
+    min-height: 100vh;
+    color: white;
+  }
+  
+  .title {
+    color: #fff;
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 30px;
+    background-color: #a0522d;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .table-dark-custom {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+    background-color: #1e1e1e;
+  }
+  
+  .table-dark-custom th {
+    background-color: #a0522d;
+    color: white;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .table-dark-custom td {
+    padding: 12px;
+    vertical-align: middle;
+    border-top: 1px solid #444;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .img-thumbnail {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .btn-outline-warning {
+    color: #ffc107;
+    border-color: #ffc107;
+    background: transparent;
+  }
+  
+  .btn-outline-warning:hover {
+    background-color: #ffc107;
+    color: black;
+  }
+  
+  .btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+    background: transparent;
+  }
+  
+  .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .btn-primary {
+    background-color: #a0522d;
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #8b4513;
+  }
+  .container {
+    padding-top: 130px;
+  }
+  

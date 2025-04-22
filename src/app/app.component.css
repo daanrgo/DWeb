@@ -1,0 +1,15 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto; /* Asegura scroll vertical */
+  }
+  
+  main {
+    padding-top: 80px; /* mismo valor que el header */
+    padding-bottom: 80px; /* mismo valor que el footer (si fixed) */
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: block;
+  }
+  

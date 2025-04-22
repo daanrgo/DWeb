@@ -1,0 +1,240 @@
+/* Estilos específicos del carrito - No afectan otros componentes */
+.pedido-container {
+    background-color: #2a2420;
+    color: white;
+    min-height: 100vh;
+    padding-top: 150px;
+    font-family: 'Oswald', sans-serif;
+}
+
+.contenedor-principal {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    gap: 20px;
+}
+
+.seccion-pedido {
+    flex: 1;
+    max-width: 40%;
+}
+
+.resumen-pedido {
+    background-color: #1d1b18;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.resumen-pedido h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #A0522D;
+    margin-bottom: 20px;
+}
+
+.resumen-pedido p,
+.resumen-pedido table td {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.resumen-pedido table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.resumen-pedido hr {
+    border: 1px solid #A0522D;
+    margin: 20px 0;
+}
+
+.seccion-productos {
+    flex: 1;
+    max-width: 55%;
+}
+
+.seccion-productos h2 {
+    font-size: 2rem;
+    color: #A0522D;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.tarjeta-producto {
+    display: flex;
+    background-color: #efe9ce;
+    border-radius: 10px;
+    padding: 20px;
+    color: #5a4222;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.tarjeta-producto:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+.tarjeta-producto img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.tarjeta-producto:hover img {
+    transform: scale(1.05);
+}
+
+.tarjeta-detalle {
+    flex: 1;
+}
+
+.tarjeta-detalle h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.tarjeta-detalle p {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.cantidad-input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.btn-cantidad {
+    background-color: #A0522D;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.btn-cantidad:hover {
+    background-color: #8B4513;
+}
+
+.cantidad-input {
+    width: 50px;
+    padding: 4px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.btn-eliminar {
+    background-color: transparent;
+    color: #dc3545;
+    border: 2px solid #dc3545;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-eliminar:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+.resumen-pedido .botones-accion {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.resumen-pedido .btn-vaciar,
+.resumen-pedido .btn-pedido {
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 25px;
+    width: 100%;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.resumen-pedido .btn-vaciar {
+    background-color: transparent;
+    color: #ff4444;
+    border: 2px solid #ff4444;
+    text-align: center;
+}
+
+.resumen-pedido .btn-vaciar:hover {
+    background-color: #ff4444;
+    color: white;
+    transform: scale(1.02);
+}
+
+.resumen-pedido .btn-pedido {
+    background-color: #A0522D;
+    color: white;
+    border: none;
+}
+
+.resumen-pedido .btn-pedido:hover {
+    background-color: #8B4513;
+    transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+    .contenedor-principal {
+        flex-direction: column;
+    }
+
+    .seccion-pedido, .seccion-productos {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .tarjeta-producto {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .tarjeta-producto img {
+        margin-right: 0;
+        margin-bottom: 15px;
+        width: 80%;
+        height: auto;
+    }
+
+    .resumen-pedido .botones-accion {
+        gap: 10px;
+    }
+
+    .resumen-pedido .btn-vaciar, 
+    .resumen-pedido .btn-pedido {
+        font-size: 1.1rem;
+        padding: 10px 15px;
+    }
+
+    .cantidad-input {
+        width: 100%;
+    }
+}

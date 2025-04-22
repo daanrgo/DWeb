@@ -1,32 +1,36 @@
-<!-- src/app/pages/comidas/comidas-form/comidas-form.component.html -->
-
 <div class="card p-4 mt-4">
-    <h3>{{ editando ? 'Editar Comida' : 'Agregar Comida' }}</h3>
-    <form (ngSubmit)="guardarComida()">
-      <div class="mb-3">
-        <label for="name" class="form-label">Nombre</label>
-        <input id="name" name="name" type="text" class="form-control" [(ngModel)]="comida.name" required />
-      </div>
-  
-      <div class="mb-3">
-        <label for="price" class="form-label">Precio</label>
-        <input id="price" name="price" type="number" class="form-control" [(ngModel)]="comida.price" required />
-      </div>
-  
-      <div class="mb-3">
-        <label for="description" class="form-label">Descripción</label>
-        <textarea id="description" name="description" class="form-control" [(ngModel)]="comida.description" rows="2"></textarea>
-      </div>
-  
-      <div class="mb-3">
-        <label for="imagen" class="form-label">URL de la imagen</label>
-        <input id="imagen" name="imagen" type="text" class="form-control" [(ngModel)]="comida.imagen" />
-      </div>
-  
-      <div class="d-flex gap-2">
-        <button type="submit" class="btn btn-primary">{{ editando ? 'Actualizar' : 'Agregar' }}</button>
-        <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
-      </div>
-    </form>
-  </div>
-  
+  <h3>{{ isEditing ? 'Editar Comida' : 'Agregar Comida' }}</h3>
+  <form (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre</label>
+      <input id="name" name="name" type="text" class="form-control" 
+             [(ngModel)]="comida.name" required />
+    </div>
+
+    <div class="mb-3">
+      <label for="price" class="form-label">Precio</label>
+      <input id="price" name="price" type="number" class="form-control" 
+             [(ngModel)]="comida.price" required />
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Descripción</label>
+      <textarea id="description" name="description" class="form-control" 
+                [(ngModel)]="comida.description" rows="2"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="imagen" class="form-label">URL de la imagen</label>
+      <input id="imagen" name="imagen" type="text" class="form-control" 
+             [(ngModel)]="comida.imagen" />
+    </div>
+
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-primary">
+        {{ isEditing ? 'Actualizar' : 'Agregar' }}
+      </button>
+      <button type="button" class="btn btn-secondary" 
+              (click)="onCancel()">Cancelar</button>
+    </div>
+  </form>
+</div>
