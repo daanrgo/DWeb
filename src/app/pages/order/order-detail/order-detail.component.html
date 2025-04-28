@@ -1,11 +1,15 @@
+<!-- src/app/pages/order/order-detail/order-detail.component.html -->
 <div *ngIf="order">
-    <h4>Detalle del Pedido</h4>
-    <ul class="list-group">
-      <li class="list-group-item"><strong>ID:</strong> {{ order.id }}</li>
-      <li class="list-group-item"><strong>Cantidad:</strong> {{ order.quantity }}</li>
-      <li class="list-group-item"><strong>ID Comida:</strong> {{ order.comidaId }}</li>
-      <li class="list-group-item"><strong>ID Factura:</strong> {{ order.billId }}</li>
-    </ul>
-    <button class="btn btn-secondary mt-3" (click)="cerrar()">Cerrar</button>
-  </div>
-  
+  <h4>Detalle del Pedido</h4>
+  <ul class="list-group">
+    <li class="list-group-item"><strong>ID:</strong> {{ order.id }}</li>
+    <li class="list-group-item"><strong>Cantidad:</strong> {{ order.quantity }}</li>
+    <li class="list-group-item">
+      <strong>ID Comida:</strong> {{ order.comida?.id || 'No disponible' }}
+    </li>
+    <li class="list-group-item">
+      <strong>ID Factura:</strong> {{ order.bill?.id || 'No disponible' }}
+    </li>
+  </ul>
+  <button class="btn btn-secondary mt-3" (click)="cerrar()">Cerrar</button>
+</div>

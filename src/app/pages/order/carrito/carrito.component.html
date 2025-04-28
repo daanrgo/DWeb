@@ -1,84 +1,114 @@
-<!-- carrito.component.html mejorado -->
+<!-- src/app/pages/order/carrito/carrito.component.html -->
+
 <div class="pedido-container">
-    <div class="contenedor-principal">
-  
-      <!-- Resumen del pedido -->
-      <div class="seccion-pedido">
-        <div class="resumen-pedido">
-          <h1>Pedido</h1>
-          <p><strong>Cliente:</strong> Daniel León</p>
-          <p><strong>Dirección:</strong> Carrera 14a #143-27</p>
-          <p><strong>Código pedido:</strong> #YT67REK234</p>
-  
-          <div class="productos">
-            <h3>Productos</h3>
-            <table>
-              <tbody>
-                <tr *ngFor="let comida of comidas">
-                  <td>{{ comida.name }}</td>
-                  <td>x{{ comida.quantity ?? 1 }}</td>
-                  <td>{{ calcularSubtotal(comida) | currency:'COP' }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-  
-          <hr>
-          <h4><strong>Total:</strong> {{ costoTotal | currency:'COP' }}</h4>
-  
-          <div class="botones-accion">
-            <button class="btn-vaciar" (click)="vaciarCarrito()">VACIAR CARRITO</button>
-            <button class="btn-pedido" (click)="hacerPedido()">HACER PEDIDO</button>
-          </div>
+  <div class="contenedor-principal">
+
+    <!-- Resumen del pedido -->
+    <div class="seccion-pedido">
+      <div class="resumen-pedido">
+        <h1>Pedido</h1>
+        <p><strong>Cliente:</strong> Daniel León</p>
+        <p><strong>Dirección:</strong> Carrera 14a #143-27</p>
+        <p><strong>Código pedido:</strong> #YT67REK234</p>
+
+        <div class="productos">
+          <h3>Productos</h3>
+          <table *ngIf="comidas.length > 0; else carritoVacio">
+            <tbody>
+              <tr *ngFor="let comida of comidas">
+                <td>{{ comida.name }}</td>
+                <td>x{{ comida.quantity ?? 1 }}</td>
+                <td>{{ calcularSubtotal(comida) | currency:'COP' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+        <h4><strong>Total:</strong> {{ costoTotal | currency:'COP' }}</h4>
+
+        <div class="botones-accion">
+          <button class="btn-vaciar" (click)="vaciarCarrito()" [disabled]="comidas.length === 0">
+            VACIAR CARRITO
+          </button>
+          <button class="btn-pedido" (click)="hacerPedido()" [disabled]="comidas.length === 0">
+            HACER PEDIDO
+          </button>
         </div>
       </div>
-  
-      <!-- Lista de productos -->
-      <div class="seccion-productos">
-        <h2>Productos</h2>
+    </div>
+
+    <!-- Lista de productos -->
+    <div class="seccion-productos">
+      <h2>Productos</h2>
+
+      <ng-container *ngIf="comidas.length > 0; else carritoVacioProductos">
         <div *ngFor="let comida of comidas; let i = index" class="tarjeta-producto">
           <img [src]="comida.imagen || '/assets/default-burger.jpg'" alt="{{ comida.name }}">
-  
+
           <div class="tarjeta-detalle">
             <h3>{{ comida.name }}</h3>
             <p>{{ comida.description }}</p>
             <p><strong>Adicionales:</strong> {{ obtenerNombresAdicionales(comida) }}</p>
             <p><strong>Total:</strong> {{ calcularSubtotal(comida) | currency:'COP' }}</p>
-  
+
             <div class="tarjeta-controles">
               <div class="cantidad-input-group">
-                <button class="btn-cantidad" (click)="comida.quantity = Math.max(1, (comida.quantity ?? 1) - 1); actualizarCantidad()">−</button>
-                <input type="number" class="cantidad-input" [(ngModel)]="comida.quantity" min="1" (change)="actualizarCantidad()" />
+                <button class="btn-cantidad" (click)="comida.quantity = Math.max(1, (comida.quantity ?? 1) - 1); actualizarCantidad()">&minus;</button>
+                <input type="number" class="cantidad-input" [(ngModel)]="comida.quantity" min="1" (change)="actualizarCantidad()">
                 <button class="btn-cantidad" (click)="comida.quantity = (comida.quantity ?? 1) + 1; actualizarCantidad()">+</button>
               </div>
-  
+
               <button class="btn-eliminar" (click)="eliminarComida(i)">Eliminar</button>
             </div>
-  
           </div>
         </div>
-      </div>
-  
+      </ng-container>
+
+      <!-- Placeholder si no hay productos -->
+      <ng-template #carritoVacioProductos>
+        <div class="carrito-vacio">
+          <img src="assets/images/empty-cart.png" alt="Carrito vacío" class="imagen-carrito-vacio">
+          <h3>¡Tu carrito está vacío! 🛒</h3>
+          <button class="btn-explorar" (click)="explorarProductos()">Explorar Productos</button>
+        </div>
+      </ng-template>
+
     </div>
   </div>
-  
-  <!-- CSS agregado -->
-  <style>
-  .tarjeta-controles {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 12px;
+</div>
+
+<!-- Mensaje si el carrito está vacío en resumen -->
+<ng-template #carritoVacio>
+  <tr>
+    <td colspan="3" style="text-align: center;">No tienes productos en el carrito</td>
+  </tr>
+</ng-template>
+
+<!-- Estilos -->
+<style>
+  .carrito-vacio {
+    text-align: center;
+    margin-top: 40px;
   }
-  
-  .tarjeta-controles .cantidad-input-group {
-    margin-top: 0;
+  .imagen-carrito-vacio {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
   }
-  
-  .tarjeta-detalle {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  .btn-explorar {
+    background-color: #A0522D;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
   }
-  </style>
-  
+  .btn-explorar:hover {
+    background-color: #8B4513;
+  }
+</style>

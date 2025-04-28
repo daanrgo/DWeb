@@ -1,7 +1,7 @@
 // src/app/pages/order/carrito/carrito.component.ts
 
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ComidasService } from 'src/app/services/comidas.service';
 import { OrderService } from 'src/app/services/order.service';
 import { DTOIdUsuarioComidas, Comida } from 'src/app/pages/comidas/comidas-table/comida';
@@ -19,15 +19,16 @@ export class CarritoComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private comidaService: ComidasService,
     private orderService: OrderService
   ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const idParam = params.get('id');
-      if (idParam) {
-        this.userId = +idParam;
+      const userIdParam = params.get('userId');
+      if (userIdParam) {
+        this.userId = +userIdParam;
         this.cargarCarritoDesdeLocalStorage();
       }
     });
@@ -39,29 +40,15 @@ export class CarritoComponent implements OnInit {
       this.comidas = JSON.parse(guardado);
       this.calcularCostoTotal();
     } else {
-      this.loadComidas();
+      this.comidas = [];
+      this.costoTotal = 0;
     }
-  }
-
-  loadComidas(): void {
-    this.comidaService.getAllComidas(this.userId).subscribe({
-      next: (comidas) => {
-        this.comidas = comidas.map(c => ({
-          ...c,
-          imagen: this.formatImagen(c.imagen)
-        }));
-        this.calcularCostoTotal();
-        this.guardarCarritoEnLocalStorage();
-      },
-      error: (err) => console.error('Error cargando comidas:', err)
-    });
   }
 
   calcularSubtotal(comida: Comida): number {
     const adicionalesCost = comida.adicionales
       ?.filter(a => comida.adicionalesSeleccionados?.[a.id])
       .reduce((sum, a) => sum + a.price, 0) || 0;
-
     return (comida.price + adicionalesCost) * (comida.quantity ?? 1);
   }
 
@@ -70,20 +57,22 @@ export class CarritoComponent implements OnInit {
       const adicionalesCost = comida.adicionales
         ?.filter(a => comida.adicionalesSeleccionados?.[a.id])
         .reduce((sum, a) => sum + a.price, 0) || 0;
-
       return total + (comida.price + adicionalesCost) * (comida.quantity ?? 1);
     }, 0);
   }
 
   hacerPedido(): void {
+    if (this.comidas.length === 0) {
+      Swal.fire('Carrito vacío', 'Agrega productos antes de hacer tu pedido.', 'warning');
+      return;
+    }
+
     const comidasDTO = this.comidas.map(c => ({
       id: c.id,
       name: c.name,
       price: c.price,
       description: c.description,
       imagen: c.imagen,
-      adicionales: c.adicionales,
-      adicionalesSeleccionados: c.adicionalesSeleccionados,
       quantity: c.quantity ?? 1
     }));
 
@@ -92,16 +81,32 @@ export class CarritoComponent implements OnInit {
       comidas: comidasDTO
     };
 
-    this.orderService.enviarPedido(dto).subscribe({
+    this.orderService.sendOrder(dto).subscribe({
       next: () => {
-        Swal.fire('Pedido enviado', 'Tu pedido ha sido realizado con éxito.', 'success');
         this.vaciarCarritoSinConfirmacion();
+        Swal.fire({
+          title: 'Pedido enviado',
+          text: 'Tu pedido ha sido realizado con éxito.',
+          icon: 'success',
+          confirmButtonColor: '#A0522D',
+          timer: 2000,
+          showConfirmButton: false
+        });
+        this.router.navigate(['/orders']);
       },
-      error: (err) => console.error('Error al enviar pedido:', err)
+      error: (err: any) => {
+        console.error('Error al enviar pedido:', err);
+        Swal.fire('Error', 'No se pudo enviar el pedido.', 'error');
+      }
     });
   }
 
   vaciarCarrito(): void {
+    if (this.comidas.length === 0) {
+      Swal.fire('Carrito ya vacío', 'No tienes productos en el carrito.', 'info');
+      return;
+    }
+
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'Se eliminarán todos los productos del carrito.',
@@ -155,4 +160,7 @@ export class CarritoComponent implements OnInit {
 
   Math = Math;
 
+  explorarProductos(): void {
+    this.router.navigate([`/comidas/${this.userId}/tarjetas`]);
+  }
 }

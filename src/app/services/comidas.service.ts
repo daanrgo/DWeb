@@ -57,14 +57,21 @@ export class ComidasService {
 
   // ✅ CORREGIDO: extrae el campo .comida del response del backend
   getComida(userId: number, id: number): Observable<Comida> {
-    return this.http.get<any>(
+    return this.http.get<{ user_id: number, comida: Comida }>(
       `${this.apiUrl}/${userId}/${id}`,
       { headers: this.jsonHeaders }
     ).pipe(
-      map(response => response.comida),
+      map(response => {
+        if (!response || !response.comida) throw new Error('Respuesta sin comida válida');
+        return {
+          ...response.comida,
+          usuarioId: response.user_id
+        };
+      }),
       catchError(this.handleError)
     );
   }
+  
 
   createComida(userId: number, comida: Omit<Comida, 'id'>): Observable<Comida> {
     return this.http.post<Comida>(

@@ -3,29 +3,26 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+// Angular Material
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-
-// Landing
+// Componentes (manteniendo tus imports actuales)
 import { LandingComponent } from './pages/landing/landing.component';
-
-// Comidas
 import { ComidasFormComponent } from './pages/comidas/comidas-form/comidas-form.component';
 import { ComidasTableComponent } from './pages/comidas/comidas-table/comidas-table.component';
 import { ComidaDetailComponent } from './pages/comidas/comidas-detail/comidas-detail.component';
-
-// Adicionales
 import { AdicionalTableComponent } from './pages/adicional/adicional-table/adicional-table.component';
 import { AdicionalDetailComponent } from './pages/adicional/adicional-detail/adicional-detail.component';
 import { AdicionalFormComponent } from './pages/adicional/adicional-form/adicional-form.component';
-
-// Clientes
 import { ClienteTableComponent } from './pages/cliente/cliente-table/cliente-table.component';
 import { ClienteFormComponent } from './pages/cliente/cliente-form/cliente-form.component';
 import { ClienteDetailComponent } from './pages/cliente/cliente-detail/cliente-detail.component';
-
-// Otros módulos
 import { AdminTableComponent } from './pages/admin/admin-table/admin-table.component';
 import { BillTableComponent } from './pages/bill/bill-table/bill-table.component';
 import { CourierTableComponent } from './pages/courier/courier-table/courier-table.component';
@@ -46,28 +43,22 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { CarritoComponent } from './pages/order/carrito/carrito.component';
 import { LoginComponent } from './pages/login/login.component';
+import { ComidasMenuComponent } from './pages/comidas/comidas-menu/comidas-menu.component';
 
 @NgModule({
   declarations: [
+    // Mantén todos tus componentes actuales
     AppComponent,
     LandingComponent,
-    
-    // Comidas
     ComidasFormComponent,
     ComidasTableComponent,
     ComidaDetailComponent,
-    
-    // Adicionales
     AdicionalTableComponent,
     AdicionalDetailComponent,
     AdicionalFormComponent,
-    
-    // Clientes
     ClienteTableComponent,
     ClienteFormComponent,
     ClienteDetailComponent,
-    
-    // Otros componentes
     AdminTableComponent,
     BillTableComponent,
     CourierTableComponent,
@@ -88,13 +79,20 @@ import { LoginComponent } from './pages/login/login.component';
     HeaderComponent,
     CarritoComponent,
     LoginComponent,
+    ComidasMenuComponent,
   ],
   imports: [
     BrowserModule,
-    FormsModule,          // Para template-driven forms (ngModel)
-    ReactiveFormsModule,  // Para reactive forms (opcional pero recomendado)
-    HttpClientModule,     // Para peticiones HTTP
-    AppRoutingModule,      // Rutas
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    
+    // Módulos de Angular Material necesarios
+    MatIconModule,        // Para los iconos (edit/delete)
+    MatTooltipModule,     // Para los tooltips en botones
+    MatSelectModule,      // Para el select de estados mejorado
+    MatButtonModule,      // Para estilos consistentes en botones
   ],
   providers: [],
   bootstrap: [AppComponent]

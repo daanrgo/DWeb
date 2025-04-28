@@ -1,0 +1,39 @@
+<div class="menu-container">
+    <!-- Header Estilo Restaurante -->
+    <div class="restaurant-header">
+      <h1>EL PORTICO</h1>
+      <h2>HAZ TU PEDIDO</h2>
+    </div>
+  
+    <!-- Barra de navegación -->
+    <div class="menu-nav">
+      <button class="nav-btn active">TODAS</button>
+      <button class="nav-btn">HAMBURGUESAS</button>
+      <button class="nav-btn">BEBIDAS</button>
+      <button class="nav-btn">ACOMPAÑAMIENTOS</button>
+    </div>
+  
+    <!-- Barra de búsqueda -->
+    <div class="search-container">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        (input)="filterComidas()"
+        placeholder="Buscar producto..."
+        class="search-input"
+      >
+    </div>
+  
+    <!-- Grid de comidas -->
+    <div class="menu-grid">
+      <div *ngFor="let comida of filteredComidas" class="comida-card" 
+           (click)="navigateToDetail(comida.id)">
+        <img [src]="comida.imagen" [alt]="comida.name" class="comida-img">
+        <div class="comida-info">
+          <h3 class="comida-name">{{ comida.name }}</h3>
+          <p class="comida-description">{{ comida.description }}</p>
+          <span class="comida-price">{{ comida.price | currency:'COP':'symbol':'1.0-0' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>

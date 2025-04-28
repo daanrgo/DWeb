@@ -21,4 +21,8 @@ export class AuthService {
   logout() {
     localStorage.removeItem('currentUser');
   }
+  getRole(): string | null {
+    const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    return user?.role || null;
+  }
 }

@@ -2,19 +2,21 @@
   <nav>
     <div class="nav-left">
       <ul class="indices">
-        <li><a href="/somos"><button>¿Quiénes Somos?</button></a></li>
-        <li><a href="#mapaPortico"><button>Sede</button></a></li>
+        <li><button (click)="router.navigate(['/somos'])">¿Quiénes Somos?</button></li>
+        <li><button (click)="router.navigate(['/#mapaPortico'])">Sede</button></li>
       </ul>
     </div>
-    <a href="/" class="logo">
+
+    <a (click)="router.navigate(['/'])" class="logo">
       <img src="assets/images/NuevoLogo.png" alt="El Pórtico Gourmet" />
     </a>
+
     <div class="nav-right">
       <ul class="indices">
-        <li><a href="#carta"><button>Carta</button></a></li>
-        <li><a href="#contactos"><button>Contáctanos</button></a></li>
+        <li><button (click)="irACarta()">Carta</button></li>
+        <li><button (click)="router.navigate(['/#contactos'])">Contáctanos</button></li>
       </ul>
-      <a href="/login" class="btn-pedido"><button>Haz tu pedido</button></a>
+      <button (click)="irACarrito()" class="btn-pedido">Haz tu pedido</button>
     </div>
   </nav>
 </header>

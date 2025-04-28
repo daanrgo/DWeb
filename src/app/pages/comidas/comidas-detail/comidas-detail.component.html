@@ -5,21 +5,21 @@
 
   <div class="detail-content">
     <div class="info-section">
-      <a routerLink="/comidas" class="back-button">
+      <a [routerLink]="['/comidas', 1, 'tarjetas']" class="back-button">
         <img src="assets/images/flechaAtras.png" alt="Volver">
       </a>
 
       <h3>Detalle de Comida</h3>
       <h1>{{comida.name}}</h1>
-      
+
       <p class="description">
         <strong>Descripción:</strong> {{comida.description}}
       </p>
-      
+
       <hr>
       <p class="price"><strong>Precio:</strong> {{comida.price | currency:'COP':'symbol':'1.0'}}</p>
       <hr>
-      
+
       <div class="image-container">
         <img [src]="comida.imagen" [alt]="comida.name" class="food-image">
       </div>
@@ -51,19 +51,27 @@
                  [(ngModel)]="comida.imagen">
         </div>
 
-        <div class="adicionales-section" *ngIf="comida.adicionales && comida.adicionales.length > 0">
-          <h3>Adicionales</h3>
-          <div class="adicionales-list">
-            <div class="adicional-item" *ngFor="let adicional of comida.adicionales; trackBy: trackByAdicional">
-              <input type="checkbox" id="adicional-{{adicional.id}}" 
-                     [checked]="comida.adicionalesSeleccionados?.[adicional.id] || false">
-              <label for="adicional-{{adicional.id}}">{{adicional.name}}</label>
-              <span class="adicional-price">{{adicional.price | currency:'COP':'symbol':'1.0'}}</span>
-            </div>
-          </div>
+        <div class="adicional-item" *ngFor="let adicional of comida.adicionales; trackBy: trackByAdicional">
+          <ng-container *ngIf="comida.adicionalesSeleccionados">
+            <input 
+              type="checkbox"
+              id="adicional-{{adicional.id}}"
+              name="adicional-{{adicional.id}}"
+              [(ngModel)]="comida.adicionalesSeleccionados[adicional.id]"
+              [ngModelOptions]="{standalone: true}">
+
+            
+            <label for="adicional-{{adicional.id}}">{{adicional.name}}</label>
+            <span class="adicional-price">{{adicional.price | currency:'COP':'symbol':'1.0'}}</span>
+          </ng-container>
         </div>
+        
+        
 
         <div class="action-buttons">
+          <button type="submit" class="btn-save" *ngIf="modoLectura">
+            Agregar al carrito
+          </button>
           <button type="submit" class="btn-save" *ngIf="isEditing">
             {{isEditing ? 'Actualizar' : 'Agregar'}}
           </button>

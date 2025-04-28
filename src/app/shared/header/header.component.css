@@ -37,11 +37,15 @@ nav {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .logo img {
   height: 100px;
   display: block;
+  transition: transform 0.3s ease;
 }
 
 .logo img:hover {
@@ -54,7 +58,7 @@ nav {
   gap: 2rem;
 }
 
-.indices button, .btn-pedido button {
+.indices button {
   background: none;
   border: none;
   color: white;
@@ -71,14 +75,21 @@ nav {
   transform: translateY(-2px);
 }
 
-.btn-pedido button {
+.btn-pedido {
   background-color: #A0522D;
+  border: none;
   border-radius: 25px;
+  color: white;
   font-weight: bold;
   padding: 0.7rem 1.5rem;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.btn-pedido button:hover {
+.btn-pedido:hover {
   background-color: #8B4513;
   transform: scale(1.05);
 }
@@ -95,7 +106,7 @@ nav {
     display: block;
   }
 
-  .nav-left .indices, 
+  .nav-left .indices,
   .nav-right .indices {
     display: none;
   }

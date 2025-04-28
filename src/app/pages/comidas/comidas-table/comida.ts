@@ -10,6 +10,7 @@ export interface Comida {
   price: number;
   description: string;
   imagen: string;
+  usuarioId?: number; 
   adicionales?: Adicional[];
   adicionalesSeleccionados?: { [key: number]: boolean };
   quantity? :number;
