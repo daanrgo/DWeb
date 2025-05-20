@@ -44,6 +44,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { CarritoComponent } from './pages/order/carrito/carrito.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ComidasMenuComponent } from './pages/comidas/comidas-menu/comidas-menu.component';
+import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { ComidasMenuComponent } from './pages/comidas/comidas-menu/comidas-menu.
     CarritoComponent,
     LoginComponent,
     ComidasMenuComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

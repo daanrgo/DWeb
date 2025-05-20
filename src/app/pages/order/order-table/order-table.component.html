@@ -6,62 +6,83 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Cliente</th>
+          <th *ngIf="!isCliente">Cliente</th>
           <th>Productos</th>
           <th>Estado</th>
-          <th>Domiciliario</th>
-          <th>Acciones</th>
+          <th *ngIf="!isCliente">Domiciliario</th>
+          <th *ngIf="!isCliente">Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of orders">
-          <td class="order-id">#{{ order.id }}</td>
-          
-          <td>
-            {{ order.bill?.client?.name || order.cliente?.nombre || 'No asignado' }}
-            <small *ngIf="order.bill?.address" class="text-muted">{{ order.bill?.address }}</small>
+        <tr *ngFor="let bill of bills">
+          <td class="order-id">#{{ bill.id }}</td>
+
+          <td *ngIf="!isCliente">
+            {{ getClienteNombre(bill) }}
+            <small *ngIf="bill.address" class="text-muted">{{ bill.address }}</small>
           </td>
-          
+
           <td>
-            <div *ngIf="order.comida">
-              {{ order.quantity }}x {{ order.comida.name }}
-              <div class="text-muted">{{ order.comida.price * order.quantity | currency }}</div>
-            </div>
-            <div *ngIf="!order.comida">-</div>
+            <ul class="list-unstyled mb-0">
+              <li *ngFor="let order of bill.orders">
+                {{ order.quantity }}x {{ order.comida?.name }}
+                <div class="text-muted">
+                  {{ getPrecioItem(order) | currency:'COP':'symbol':'1.0-0' }}
+                </div>
+              </li>
+            </ul>
           </td>
-          
+
           <td>
-            <div class="status-container">
-              <span [ngClass]="getEstadoClass(order.status)">
-                {{ getEstadoTexto(order.status) }}
-              </span>
-              <select [ngModel]="order.status" 
-                      (ngModelChange)="cambiarEstado(order.id, $event)" 
-                      class="status-select">
-                <option [value]="0">Pendiente</option>
-                <option [value]="1">En Proceso</option>
-                <option [value]="2">Entregado</option>
+            <div *ngIf="!isCliente; else soloTexto">
+              <select [(ngModel)]="bill.status" (ngModelChange)="cambiarEstado(bill.id, $event)" class="form-select form-select-sm">
+                <option [value]="1">Recibido</option>
+                <option [value]="2">Preparando</option>
+                <option [value]="3">En camino</option>
+                <option [value]="4">Entregado</option>
               </select>
             </div>
+            <ng-template #soloTexto>
+              <span [ngClass]="{
+                'badge bg-primary': bill.status === 1,
+                'badge bg-warning text-dark': bill.status === 2,
+                'badge bg-info': bill.status === 3,
+                'badge bg-success': bill.status === 4
+              }">
+                {{ getEstadoTexto(bill.status || 0) }}
+              </span>
+            </ng-template>
           </td>
-          
-          <td>{{ order.courier?.name || 'Sin asignar' }}</td>
-          
-          <td class="actions">
-            <button class="btn-action edit" (click)="editar(order)">
-              <i class="material-icons">edit</i>
+
+          <td *ngIf="!isCliente">{{ getCourierNombre(bill) }}</td>
+
+          <td *ngIf="!isCliente" class="actions">
+            <a [routerLink]="['/bills/detail', bill.id]" class="btn btn-sm btn-info" title="Ver detalle">
+              <i class="bi bi-eye"></i>
+            </a>
+            <a [routerLink]="['/bills/edit', bill.id]" class="btn btn-sm btn-primary" title="Editar">
+              <i class="bi bi-pencil"></i>
+            </a>
+            <button class="btn btn-sm btn-danger" (click)="eliminarBill(bill.id)" title="Eliminar">
+              <i class="bi bi-trash"></i>
             </button>
-            <button class="btn-action delete" (click)="eliminarOrder(order.id)">
-              <i class="material-icons">delete</i>
-            </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="bills.length > 0">
+          <td colspan="4" class="text-end fw-bold">Total General:</td>
+          <td class="text-end fw-bold">
+            {{ getTotalGeneral() | currency:'CooooOP':'symbol':'1.0-0' }}
+          </td>
+          <td *ngIf="!isCliente"></td>
+        </tr>
+
+        <tr *ngIf="bills.length === 0">
+          <td [attr.colspan]="isCliente ? 4 : 6" class="text-center text-muted py-4">
+            No se encontraron pedidos
           </td>
         </tr>
       </tbody>
     </table>
-
-    <div *ngIf="orders.length === 0" class="empty-table">
-      <mat-icon>info</mat-icon>
-      <p>No hay pedidos registrados</p>
-    </div>
   </div>
 </div>

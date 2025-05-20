@@ -18,6 +18,7 @@ import { CourierTableComponent } from './pages/courier/courier-table/courier-tab
 import { CourierFormComponent } from './pages/courier/courier-form/courier-form.component';
 import { OperatorTableComponent } from './pages/operator/operator-table/operator-table.component';
 import { OperatorFormComponent } from './pages/operator/operator-form/operator-form.component';
+import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 
 import { AuthGuard } from './guards/auth.guard';
 
@@ -65,6 +66,11 @@ const routes: Routes = [
 { path: 'operators', component: OperatorTableComponent },
 { path: 'operators/crear', component: OperatorFormComponent },
 { path: 'operators/editar/:id', component: OperatorFormComponent },
+
+//Dashboard
+
+{ path: 'admin/dashboard', component: DashboardComponent },
+
 
 
   // Fallback

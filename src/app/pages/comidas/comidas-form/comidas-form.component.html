@@ -1,36 +1,75 @@
-<div class="card p-4 mt-4">
-  <h3>{{ isEditing ? 'Editar Comida' : 'Agregar Comida' }}</h3>
+<div class="card">
+  <h3>{{ isEditing ? 'Editar Comida' : 'Crear Producto' }}</h3>
   <form (ngSubmit)="onSubmit()">
     <div class="mb-3">
-      <label for="name" class="form-label">Nombre</label>
-      <input id="name" name="name" type="text" class="form-control" 
-             [(ngModel)]="comida.name" required />
-    </div>
-
-    <div class="mb-3">
-      <label for="price" class="form-label">Precio</label>
-      <input id="price" name="price" type="number" class="form-control" 
-             [(ngModel)]="comida.price" required />
+      <label for="name" class="form-label">Nombre de la Hamburguesa</label>
+      <input 
+        id="name" 
+        name="name" 
+        type="text" 
+        class="form-control" 
+        [(ngModel)]="comida.name" 
+        placeholder="Ej: El Partico" 
+        required 
+      />
     </div>
 
     <div class="mb-3">
       <label for="description" class="form-label">Descripción</label>
-      <textarea id="description" name="description" class="form-control" 
-                [(ngModel)]="comida.description" rows="2"></textarea>
+      <textarea 
+        id="description" 
+        name="description" 
+        class="form-control" 
+        [(ngModel)]="comida.description" 
+        placeholder="Descripción del producto"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="price" class="form-label">Precio</label>
+      <input 
+        id="price" 
+        name="price" 
+        type="number" 
+        class="form-control" 
+        [(ngModel)]="comida.price" 
+        placeholder="0" 
+        required 
+      />
     </div>
 
     <div class="mb-3">
       <label for="imagen" class="form-label">URL de la imagen</label>
-      <input id="imagen" name="imagen" type="text" class="form-control" 
-             [(ngModel)]="comida.imagen" />
+      <input 
+        id="imagen" 
+        name="imagen" 
+        type="text" 
+        class="form-control" 
+        [(ngModel)]="comida.imagen" 
+        placeholder="assets/images/imagen.png" 
+      />
     </div>
 
-    <div class="d-flex gap-2">
-      <button type="submit" class="btn btn-primary">
-        {{ isEditing ? 'Actualizar' : 'Agregar' }}
-      </button>
-      <button type="button" class="btn btn-secondary" 
-              (click)="onCancel()">Cancelar</button>
+    <div class="adicionales-container">
+      <h4>Adicionales</h4>
+      <div *ngFor="let adicional of adicionalesDisponibles" class="form-check">
+        <input 
+          class="form-check-input"
+          type="checkbox"
+          [id]="'adicional-' + adicional.id"
+          [checked]="isAdicionalSeleccionado(adicional)"
+          (change)="toggleAdicional(adicional)" 
+        />
+        <label class="form-check-label" [for]="'adicional-' + adicional.id">
+          {{ adicional.name }} (+{{ adicional.price | currency:'COP':'symbol':'1.0-0' }})
+        </label>
+      </div>
+    </div>
+
+    <div class="d-flex">
+      <button type="button" class="btn-secondary" (click)="onCancel()">Cancelar</button>
+      <button type="submit" class="btn-primary">{{ isEditing ? 'Actualizar' : 'Crear' }}</button>
     </div>
   </form>
 </div>

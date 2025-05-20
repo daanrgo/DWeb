@@ -1,8 +1,8 @@
 // src/app/pages/bills/bill-form.component.ts
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { BillService } from 'src/app/services/bill.service';
 import { Bill } from '../bill-table/bill';
+import { BillService } from 'src/app/services/bill.service';
 
 @Component({
   selector: 'app-bill-form',
@@ -13,10 +13,10 @@ export class BillFormComponent {
     status: 0,
     creationDate: new Date(),
     address: '',
-    client: '',
-    courier: '',
-    operator: '',
-    paymentType: ''
+    client: undefined,
+    courier: undefined,
+    operator: undefined,
+    paymentType: undefined
   };
 
   constructor(private billService: BillService, private router: Router) {}
@@ -28,6 +28,3 @@ export class BillFormComponent {
     });
   }
 }
-
-
-

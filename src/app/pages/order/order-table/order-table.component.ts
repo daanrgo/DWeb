@@ -1,9 +1,8 @@
 // src/app/pages/order/order-table/order-table.component.ts
-
 import { Component, OnInit } from '@angular/core';
-import { OrderService } from 'src/app/services/order.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { Order } from './order';
+import { BillService } from 'src/app/services/bill.service';
+import { Bill } from 'src/app/pages/bill/bill-table/bill';
 
 @Component({
   selector: 'app-order-table',
@@ -11,119 +10,96 @@ import { Order } from './order';
   styleUrls: ['./order-table.component.css']
 })
 export class OrderTableComponent implements OnInit {
-  orders: Order[] = [];
-  modoEdicion: boolean = false;
-  orderSeleccionado: Order | null = null;
-  isCliente: boolean = false;
+  bills: Bill[] = [];
+  isCliente = false;
+  isOperador = false;
+  isAdmin = false;
+  isCourier = false;
   currentUserId: number | null = null;
 
   constructor(
-    private orderService: OrderService,
-    private authService: AuthService
+    private authService: AuthService,
+    private billService: BillService
   ) {}
 
   ngOnInit(): void {
     const role = this.authService.getRole();
-    this.isCliente = (role === 'cliente');
+    this.currentUserId = this.authService.getUserId();
+    this.isCliente = role === 'cliente';
+    this.isOperador = role === 'operador';
+    this.isAdmin = role === 'admin';
+    this.isCourier = role === 'courier';
 
-    const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    if (user?.id) {
-      this.currentUserId = user.id;
-    }
-
-    this.cargarOrders();
-  }
-
-  cargarOrders(): void {
-    this.orderService.getOrders().subscribe({
-      next: (data) => {
-        console.log('ORDERS RAW DATA:', data); 
-        if (this.isCliente && this.currentUserId !== null) {
-          this.orders = data.filter(order => order.bill?.client?.id === this.currentUserId);
-        } else {
-          this.orders = data;
-        }
-      },
-      error: (error) => {
-        console.error('Error cargando órdenes:', error);
-      }
-    });
-  }
-
-  nuevoOrder(): void {
-    this.orderSeleccionado = {
-      id: 0,
-      quantity: 1,
-      comida: { id: 0, name: '', price: 0 }, 
-      bill: { id: 0, client: { id: 0, name: '' }, address: '' },
-      courier: undefined,
-      status: 0
-    };
-    this.modoEdicion = true;
-  }
-  
-
-  editar(order: Order): void {
-    this.orderSeleccionado = { ...order };
-    this.modoEdicion = true;
-  }
-
-  eliminarOrder(id: number): void {
-    if (confirm('¿Seguro que deseas eliminar este pedido?')) {
-      this.orderService.deleteOrder(id).subscribe({
-        next: () => this.cargarOrders(),
-        error: (error) => console.error('Error al eliminar el pedido:', error)
+    if (this.isCliente && this.currentUserId) {
+      this.billService.getByClientId(this.currentUserId).subscribe({
+        next: data => this.bills = data,
+        error: err => console.error('Error al obtener pedidos del cliente', err)
       });
-    }
-  }
-
-  guardar(order: Order): void {
-    if (order.id && order.id > 0) {
-      this.orderService.updateOrder(order).subscribe({
-        next: () => this.cargarOrders(),
-        error: (error) => console.error('Error actualizando pedido:', error)
+    } else if (this.isCourier && this.currentUserId) {
+      this.billService.getByCourierId(this.currentUserId).subscribe({
+        next: data => this.bills = data,
+        error: err => console.error('Error al obtener pedidos del courier', err)
       });
     } else {
-      this.orderService.addOrder(order).subscribe({
-        next: () => this.cargarOrders(),
-        error: (error) => console.error('Error creando pedido:', error)
+      this.billService.getAll().subscribe({
+        next: data => this.bills = data,
+        error: err => console.error('Error al obtener todos los pedidos', err)
       });
     }
-    this.cancelar();
   }
 
-  cancelar(): void {
-    this.modoEdicion = false;
-    this.orderSeleccionado = null;
-  }
+cambiarEstado(billId: number, nuevoEstado: number): void {
+  this.billService.updateStatus(billId, nuevoEstado).subscribe({
+    next: () => {
+      const bill = this.bills.find(b => b.id === billId);
+      if (bill) bill.status = nuevoEstado;
+    },
+    error: err => console.error('Error actualizando estado del pedido:', err)
+  });
+}
 
-  cambiarEstado(orderId: number, nuevoEstado: number): void {
-    this.orderService.updateStatus(orderId, nuevoEstado).subscribe({
-      next: () => {
-        const order = this.orders.find(o => o.id === orderId);
-        if (order) {
-          order.status = nuevoEstado;
-        }
-      },
-      error: (error) => console.error('Error cambiando estado:', error)
-    });
-  }
 
-  getEstadoTexto(status: number): string {
-    switch (status) {
-      case 0: return 'Pendiente';
-      case 1: return 'En Proceso';
-      case 2: return 'Entregado';
+  getEstadoTexto(estado: number = 0): string {
+    switch (estado) {
+      case 1: return 'Recibido';
+      case 2: return 'Preparando';
+      case 3: return 'En camino';
+      case 4: return 'Entregado';
       default: return 'Desconocido';
     }
   }
 
-  getEstadoClass(status: number): string {
-    switch (status) {
-      case 0: return 'estado-pendiente';
-      case 1: return 'estado-proceso';
-      case 2: return 'estado-entregado';
-      default: return '';
+  getPrecioItem(order: any): number {
+    if (!order?.comida) return 0;
+    const base = order.comida.price || 0;
+    const extras = (order.comida.adicionales || []).reduce((sum: number, a: any) => sum + (a.price || 0), 0);
+    return (base + extras) * (order.quantity || 1);
+  }
+
+  getTotal(bill: Bill): number {
+    if (!bill?.orders || bill.orders.length === 0) return 0;
+    return bill.orders.reduce((acc, o) => acc + this.getPrecioItem(o), 0);
+  }
+
+  getTotalGeneral(): number {
+    return this.bills.reduce((sum, b) => sum + this.getTotal(b), 0);
+  }
+
+  getClienteNombre(bill: Bill): string {
+    return bill?.client?.username || 'N/A';
+  }
+
+  getCourierNombre(bill: Bill): string {
+    return bill?.courier?.name || 'Sin asignar';
+  }
+
+  eliminarBill(id: number): void {
+    if (confirm('¿Está seguro de eliminar este pedido?')) {
+      this.billService.delete(id).subscribe({
+        next: () => this.bills = this.bills.filter(b => b.id !== id),
+        error: err => console.error('Error eliminando pedido:', err)
+      });
     }
   }
+  
 }

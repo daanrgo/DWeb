@@ -22,6 +22,10 @@
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
               <input type="text" formControlName="username" placeholder="Correo electrónico/Usuario" required />
               <input type="password" formControlName="password" placeholder="Contraseña" required />
+
+              <div *ngIf="errorMessage" class="textoError">
+                {{ errorMessage }}
+              </div>
       
               <a class="forgot-password">¿Olvidaste tu contraseña?</a>
       

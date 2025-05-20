@@ -1,32 +1,43 @@
-// src/app/pages/bills/bill.ts
+export interface Adicional {
+  id: number;
+  name: string;
+  price: number;
+}
 
-export class Bill {
-    id: number;
-    status: number;
-    creationDate: Date;
-    address: string;
-    operator?: string;
-    client?: string;
-    courier?: string;
-    paymentType?: string;
-  
-    constructor(
-      id: number,
-      status: number,
-      creationDate: Date,
-      address: string,
-      operator?: string,
-      client?: string,
-      courier?: string,
-      paymentType?: string
-    ) {
-      this.id = id;
-      this.status = status;
-      this.creationDate = creationDate;
-      this.address = address;
-      this.operator = operator;
-      this.client = client;
-      this.courier = courier;
-      this.paymentType = paymentType;
-    }
-  }
+export interface Comida {
+  id: number;
+  name: string;
+  price: number;
+  description?: string;
+  imagen?: string;
+  adicionales?: Adicional[];
+  adicionalesSeleccionados?: { [key: number]: boolean };
+}
+
+export interface OrderEntity {
+  id: number;
+  quantity: number;
+  comida: Comida;
+}
+
+export interface Client {
+  id: number;
+  username: string;
+  name?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+}
+
+export interface Bill {
+  id: number;
+  status: number;
+  creationDate: Date;
+  address: string;
+  operator?: any;
+  client?: Client;
+  courier?: any;
+  paymentType?: any;
+  orders: OrderEntity[];
+}

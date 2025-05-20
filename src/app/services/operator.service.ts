@@ -20,14 +20,14 @@ export class OperatorService {
   }
 
   addOperator(operator: Operator): Observable<Operator> {
-    return this.http.post<Operator>(`${this.apiUrl}/create`, operator);
+    return this.http.post<Operator>(this.apiUrl, operator); // POST to /api/operators
   }
 
   updateOperator(operator: Operator): Observable<Operator> {
-    return this.http.put<Operator>(`${this.apiUrl}/update/${operator.id}`, operator);
+    return this.http.put<Operator>(`${this.apiUrl}/${operator.id}`, operator); // PUT to /api/operators/{id}
   }
 
   deleteOperator(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`); // DELETE to /api/operators/{id}
   }
 }

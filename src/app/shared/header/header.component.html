@@ -1,9 +1,15 @@
+<!-- src/app/shared/header/header.component.html -->
 <header>
   <nav>
     <div class="nav-left">
       <ul class="indices">
         <li><button (click)="router.navigate(['/somos'])">¿Quiénes Somos?</button></li>
-        <li><button (click)="router.navigate(['/#mapaPortico'])">Sede</button></li>
+        <li><button (click)="scrollTo('mapaPortico')">Sede</button></li>
+
+        <!-- Mover Carta a nav-left cuando cliente -->
+        <ng-container *ngIf="role === 'cliente'">
+          <li><button (click)="irACarta()">Carta</button></li>
+        </ng-container>
       </ul>
     </div>
 
@@ -13,10 +19,42 @@
 
     <div class="nav-right">
       <ul class="indices">
-        <li><button (click)="irACarta()">Carta</button></li>
-        <li><button (click)="router.navigate(['/#contactos'])">Contáctanos</button></li>
+        <!-- Sesión no iniciada -->
+        <ng-container *ngIf="!role">
+          <li><button (click)="router.navigate(['/login'])">Iniciar Sesión</button></li>
+          <li><button (click)="router.navigate(['/clientes/crear'])">Registrarse</button></li>
+        </ng-container>
+
+        <!-- Cliente -->
+        <ng-container *ngIf="role === 'cliente'">
+          <li><button (click)="scrollTo('contactos')">Contáctanos</button></li>
+        </ng-container>
+
+        <!-- Admin -->
+        <ng-container *ngIf="role === 'admin'">
+          <li><button (click)="router.navigate(['/admin/dashboard'])">Dashboard</button></li>
+        </ng-container>
+
+        <!-- Courier -->
+        <ng-container *ngIf="role === 'courier'">
+          <li><button (click)="router.navigate(['/courier/envios'])">Mis Envíos</button></li>
+        </ng-container>
+
+        <!-- Operador -->
+        <ng-container *ngIf="role === 'operador'">
+          <li><button (click)="router.navigate(['/operator/order-table'])">Pedidos</button></li>
+        </ng-container>
+
+        <!-- Logout -->
+        <li *ngIf="role">
+          <button (click)="logout()">Cerrar sesión</button>
+        </li>
       </ul>
-      <button (click)="irACarrito()" class="btn-pedido">Haz tu pedido</button>
+
+      <!-- Botón de pedido -->
+      <div class="btn-pedido" *ngIf="role === 'cliente'">
+        <button (click)="irACarrito()">Haz tu Pedido</button>
+      </div>
     </div>
   </nav>
 </header>

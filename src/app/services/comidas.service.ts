@@ -84,8 +84,8 @@ export class ComidasService {
   }
   
 
-  updateComida(userId: number, id: number, comida: Comida): Observable<Comida> {
-    return this.http.put<Comida>(
+  updateComida(userId: number, id: number, comida: any): Observable<any> {
+    return this.http.put(
       `${this.apiUrl}/${userId}/update/${id}`,
       comida,
       { headers: this.jsonHeaders }
@@ -93,4 +93,5 @@ export class ComidasService {
       catchError(this.handleError)
     );
   }
+  
 }
