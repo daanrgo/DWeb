@@ -45,6 +45,7 @@ import { CarritoComponent } from './pages/order/carrito/carrito.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ComidasMenuComponent } from './pages/comidas/comidas-menu/comidas-menu.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
+import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { DashboardComponent } from './pages/admin/dashboard/dashboard.component'
     LoginComponent,
     ComidasMenuComponent,
     DashboardComponent,
+    UnauthorizedComponent,
   ],
   imports: [
     BrowserModule,

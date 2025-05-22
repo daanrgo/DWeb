@@ -19,61 +19,48 @@ import { CourierFormComponent } from './pages/courier/courier-form/courier-form.
 import { OperatorTableComponent } from './pages/operator/operator-table/operator-table.component';
 import { OperatorFormComponent } from './pages/operator/operator-form/operator-form.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
-
+import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 import { AuthGuard } from './guards/auth.guard';
+import { RoleGuard } from './guards/role.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
   { path: 'landing', component: LandingComponent },
 
-  // Login
   { path: 'login', component: LoginComponent },
 
-  //Orders
+  { path: 'orders', component: OrderTableComponent, canActivate: [RoleGuard], data: { expectedRole: 'operador' } },
 
-  { path: 'orders', component: OrderTableComponent},
-
-
-    // Carrito (usuario autenticado)
   { path: 'comidas/:userId/carrito', component: CarritoComponent, canActivate: [AuthGuard] },
 
-  // CRUD Comidas (admin)
-  { path: 'comidas', component: ComidasTableComponent },
-  { path: 'comidas/crear', component: ComidasFormComponent },
-  { path: 'comidas/editar/:id', component: ComidasFormComponent },
+  { path: 'comidas', component: ComidasTableComponent, canActivate: [RoleGuard], data: { expectedRole: 'admin' } },
+  { path: 'comidas/crear', component: ComidasFormComponent, canActivate: [RoleGuard], data: { expectedRole: 'admin' } },
+  { path: 'comidas/editar/:id', component: ComidasFormComponent, canActivate: [RoleGuard], data: { expectedRole: 'admin' } },
 
-  // Cliente: vista menú y detalle
-  { path: 'comidas/:userId/tarjetas', component: ComidasMenuComponent },
+  { path: 'comidas/:userId/tarjetas', component: ComidasMenuComponent, canActivate: [RoleGuard], data: { expectedRole: 'cliente' } },
   { path: 'comidas/:userId/:id', component: ComidaDetailComponent },
 
+  { path: 'adicionales', component: AdicionalTableComponent, canActivate: [RoleGuard], data: { expectedRole: 'admin' } },
+  { path: 'adicionales/crear', component: AdicionalFormComponent, canActivate: [RoleGuard], data: { expectedRole: 'admin' } },
+  { path: 'adicionales/editar/:id', component: AdicionalFormComponent, canActivate: [RoleGuard], data: { expectedRole: 'admin' } },
 
-  // Adicionales
-  { path: 'adicionales', component: AdicionalTableComponent },
-  { path: 'adicionales/crear', component: AdicionalFormComponent },
-  { path: 'adicionales/editar/:id', component: AdicionalFormComponent },
-
-  // Clientes
-  { path: 'clientes', component: ClienteTableComponent },
+  { path: 'clientes', component: ClienteTableComponent, canActivate: [RoleGuard], data: { expectedRole: 'admin' } },
   { path: 'clientes/crear', component: ClienteFormComponent },
-  { path: 'clientes/editar/:id', component: ClienteFormComponent },
+  { path: 'clientes/editar/:id', component: ClienteFormComponent, canActivate: [RoleGuard], data: { expectedRole: 'admin' } },
 
-  // Courier
-{ path: 'couriers', component: CourierTableComponent },
-{ path: 'couriers/crear', component: CourierFormComponent },
-{ path: 'couriers/editar/:id', component: CourierFormComponent },
+  { path: 'couriers', component: CourierTableComponent, canActivate: [RoleGuard], data: { expectedRole: 'admin' } },
+  { path: 'couriers/crear', component: CourierFormComponent, canActivate: [RoleGuard], data: { expectedRole: 'admin' } },
+  { path: 'couriers/editar/:id', component: CourierFormComponent, canActivate: [RoleGuard], data: { expectedRole: 'admin' } },
 
-// Operator
-{ path: 'operators', component: OperatorTableComponent },
-{ path: 'operators/crear', component: OperatorFormComponent },
-{ path: 'operators/editar/:id', component: OperatorFormComponent },
+  { path: 'courier/envios', component: CourierTableComponent, canActivate: [RoleGuard], data: { expectedRole: 'courier' } },
 
-//Dashboard
+  { path: 'operators', component: OperatorTableComponent, canActivate: [RoleGuard], data: { expectedRole: 'admin' } },
+  { path: 'operators/crear', component: OperatorFormComponent, canActivate: [RoleGuard], data: { expectedRole: 'admin' } },
+  { path: 'operators/editar/:id', component: OperatorFormComponent, canActivate: [RoleGuard], data: { expectedRole: 'admin' } },
 
-{ path: 'admin/dashboard', component: DashboardComponent },
+  { path: 'admin/dashboard', component: DashboardComponent, canActivate: [RoleGuard], data: { expectedRole: 'admin' } },
 
-
-
-  // Fallback
+  { path: 'unauthorized', component: UnauthorizedComponent },
   { path: '**', redirectTo: 'landing' }
 ];
 

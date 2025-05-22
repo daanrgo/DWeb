@@ -10,7 +10,7 @@ export class OperatorService {
   private apiUrl = 'http://localhost:8010/api/operators';
 
   constructor(private http: HttpClient) {}
-
+  
   getOperators(): Observable<Operator[]> {
     return this.http.get<Operator[]>(this.apiUrl);
   }
